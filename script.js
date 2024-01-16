@@ -1,21 +1,39 @@
 let debounceTimer;
 
-document.body.addEventListener('mouseover', function(event) {
-    let target = event.target.closest('a');
-    if (target && target.href) {
-        showFloatingWindow(target.href, target);
+chrome.storage.sync.get('enabled', function(data) {
+    if (data.enabled !== false) {
+        document.body.addEventListener('mouseover', handleMouseOver);
+        document.body.addEventListener('mouseout', handleMouseOut);
     }
 });
 
-document.body.addEventListener('mouseout', function(event) {
+function handleMouseOver(event) {
+    let target = event.target.closest('a');
+    if (target && target.href) {
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+        }
+        debounceTimer = setTimeout(() => showFloatingWindow(target.href, target), 50);
+    }
+}
+
+function handleMouseOut(event) {
     if (event.target.closest('a')) {
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+        }
         hideFloatingWindow();
     }
+}
+
+//dynamic loading continue to watch dom
+const observer = new MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+    });
 });
 
 // Start observing DOM
 observer.observe(document.body, { childList: true, subtree: true });
-
 
 function showFloatingWindow(url, linkElement) {
     let floatingWindow = document.getElementById('linkHoverInfoWindow');
@@ -43,18 +61,23 @@ function positionFloatingWindow(floatingWindow, linkElement) {
     floatingWindow.style.display = 'block';
 }
 
-//dynamic loading continue to watch dom
-const observer = new MutationObserver(mutations => {
-    mutations.forEach(mutation => {
-    });
-});
-
+//checks if known 2 part domain and generates domain detail
 function getDomainName(hostname) {
+    const twoPartTlds = [
+        'co.uk', 'com.au', 'com.br', 'co.jp', 'co.nz', 'co.za', 
+        'com.sg', 'co.in', 'co.il', 'com.mx', 'com.tw', 'com.hk', 
+        'co.kr', 'ne.jp', 'net.au', 'org.uk', 'ac.uk', 'gov.uk', 
+        'edu.au', 'or.jp'
+    ];
+
     let parts = hostname.split('.');
-    if (parts.length > 1) {
-        return parts.slice(-2).join('.');
+    if (parts.length > 2) {
+        let lastTwoParts = parts.slice(-2).join('.');
+        if (twoPartTlds.includes(lastTwoParts)) {
+            return parts.slice(-3).join('.');
+        }
     }
-    return hostname;
+    return parts.slice(-2).join('.');
 }
 
 function hideFloatingWindow() {

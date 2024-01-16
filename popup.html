@@ -8,7 +8,12 @@
     <div id="popup-content">
         <h1>Link Hover Info</h1>
         <p>This extension shows the real URL of links in a floating window on hover.</p>
-        <p>Hover over any link on a webpage to see its actual destination.</p>
+        <div class="toggle-switch">
+            <input type="checkbox" id="toggle-extension" class="toggle-checkbox">
+            <label for="toggle-extension" class="toggle-label"></label>
+        </div>
+        <button id="refresh-button">Refresh</button>
     </div>
+    <script src="popup.js"></script>
 </body>
 </html>
