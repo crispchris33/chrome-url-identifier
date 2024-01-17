@@ -13,7 +13,7 @@ function handleMouseOver(event) {
         if (debounceTimer) {
             clearTimeout(debounceTimer);
         }
-        debounceTimer = setTimeout(() => showFloatingWindow(target.href, target), 50);
+        debounceTimer = setTimeout(() => showFloatingWindow(target.href, target), 200);
     }
 }
 
