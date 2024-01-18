@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let fullUrl = tabs[0].url;
         let domain = getDomainName(new URL(fullUrl).hostname);
 
-        currentSiteUrlElement.textContent = 'URL: ' + fullUrl;
-        currentDomainElement.textContent = 'Domain: ' + domain;
+        currentSiteUrlElement.textContent = fullUrl;
+        currentDomainElement.textContent = domain;
 
         chrome.storage.sync.get({whitelist: []}, function(data) {
             siteToggle.checked = data.whitelist.includes(fullUrl);

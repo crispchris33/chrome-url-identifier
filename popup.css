@@ -4,34 +4,14 @@
     width: 400px;
     margin: auto;
     padding: 15px;
-    background-color: #343a40;
+    background-color: #6c757d;
 }
 
 /* Title and logo */
 h2 {
     font-size: 24px;
-    margin-bottom: 0;
-}
-
-#logo {
-    width: 16px;
-    height: 16px;
-    margin-bottom: 15px;
-}
-
-/* URL detail and logo */
-#logo {
-    width: 50px; 
-    height: auto;
-    display: block;
-    margin: 0 auto 10px;
-}
-
-#options-link {
-    display: block;
-    margin-top: 10px;
-    color: #007bff; 
-    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 0px;
 }
 
 .card {
@@ -40,11 +20,11 @@ h2 {
 
 .card-header {
     background-color: #f8f9fa; 
-    border-bottom: 1px solid #e9ecef; 
+    border-bottom: 1px solid #e9ecef;
 }
 
 .card-body {
-    padding: 15px;
+    padding: 10px;
 }
 
 .custom-switch .custom-control-label::after {
@@ -59,13 +39,6 @@ h2 {
 .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
     background-color: #007bff; 
     border-color: #007bff;
-}
-
-/* Whitelist URL display */
-.whitelist-container span {
-    display: block;
-    font-size: 14px;
-    margin-top: 5px;
 }
 
 /* Refresh button */
@@ -96,8 +69,11 @@ h2 {
 }
 
 #current-site-url, #current-domain {
-    font-size: 11px; 
+    font-size: 12px; 
     margin-top: 5px;
+    color: #007bff; 
+    word-break: break-all;
+    overflow-wrap: break-word;
 }
 
 .custom-control {
@@ -120,21 +96,10 @@ h2 {
     border-color: #007bff; 
 }
 
-/* Card top section */
-.card.bg-light {
-    background-color: #f8f9fa; 
-    margin-bottom: 20px; 
-}
-
 /* Options button */
 #options-button.btn-primary {
     background-color: #007bff; 
     border-color: #007bff; 
-}
-
-#current-site-url, #current-domain {
-    font-size: 10px; 
-    margin-top: 15px; 
 }
 
 /* Enhanced Custom Checkbox Styles */
@@ -147,6 +112,7 @@ h2 {
     position: relative;
     padding-left: 2.5em;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .custom-control-label:before, .custom-control-label:after {
@@ -200,16 +166,7 @@ h2 {
     background-color: #f8f9fa;
     border-bottom: 1px solid #e9ecef;
     text-align: center;
-}
-
-.card-body {
-    padding: 15px;
-}
-
-/* Whitelist URL display */
-#current-site-url, #current-domain {
-    font-size: 12px; 
-    margin-top: 5px; 
+    font-weight: bold;
 }
 
 /* Button styling */
@@ -243,20 +200,17 @@ h2 {
     border-radius: 4px; 
 }
 
-.card {
-    margin-bottom: 20px;
-}
-
 .button-container {
     border: 1px solid #ddd;
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 20px !important;
     border-radius: 4px;
     background-color: #ffffff; 
 }
 
 .switch-container {
     text-align: center;
+    margin-top: 20px;
     margin-bottom: 20px;
     background-color: #ffffff; 
     border-radius: 4px; 
@@ -266,4 +220,38 @@ h2 {
 
 .custom-control.custom-switch {
     display: inline-block; 
+}
+
+/* URL label styling */
+.url-label {
+    display: inline-block;
+    color: #000; 
+}
+
+/* URL text styling */
+.url-text {
+    font-size: 11px;
+    margin-top: 5px;
+    color: #007bff;
+    word-break: break-all;
+    overflow-wrap: break-word;
+}
+
+/* Styles for URL display container */
+.url-display {
+    margin-top: 5px;
+}
+
+/* URL label styling */
+.url-label {
+    font-weight: bold;
+    color: #000;
+}
+
+/* URL text styling */
+.url-text {
+    font-size: 11px;
+    color: #007bff;
+    word-break: break-all;
+    overflow-wrap: break-word;
 }

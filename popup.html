@@ -34,14 +34,20 @@
             <div class="card-body">
                 <div class="custom-control custom-switch mb-2">
                     <input type="checkbox" class="custom-control-input" id="whitelist-site-toggle">
-                    <label class="custom-control-label" for="whitelist-site-toggle">Whitelist Current Site (Full URL):</label>
-                    <span id="current-site-url" class="d-block mt-1"></span>
+                    <label class="custom-control-label" for="whitelist-site-toggle">Whitelist Current Site (Full URL)</label>
+                    <div class="url-display">
+                        <span class="url-label">URL:</span>
+                        <span id="current-site-url" class="url-text"></span>
+                    </div>
                 </div>
 
                 <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="whitelist-domain-toggle">
-                    <label class="custom-control-label" for="whitelist-domain-toggle">Whitelist Domain Only:</label>
-                    <span id="current-domain" class="d-block mt-1"></span>
+                    <label class="custom-control-label" for="whitelist-domain-toggle">Whitelist Domain Only</label>
+                    <div class="url-display">
+                        <span class="url-label">URL:</span>
+                        <span id="current-domain" class="url-text"></span>
+                    </div>
                 </div>
             </div>
         </div>
