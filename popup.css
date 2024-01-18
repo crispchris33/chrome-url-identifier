@@ -1,75 +1,273 @@
 /* General styles */
 #popup-content {
     font-family: Arial, sans-serif;
+    width: 400px;
+    margin: auto;
     padding: 15px;
-    text-align: center;
-    width: 300px;
+    background-color: #343a40;
+}
+
+/* Title and logo */
+h2 {
+    font-size: 24px;
+    margin-bottom: 0;
+}
+
+#logo {
+    width: 16px;
+    height: 16px;
+    margin-bottom: 15px;
+}
+
+/* URL detail and logo */
+#logo {
+    width: 50px; 
     height: auto;
-}
-
-h1 {
-    margin-bottom: 10px;
-}
-
-/* slider */
-.toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-    margin: 10px 0;
-}
-
-.toggle-checkbox {
-    display: none;
-}
-
-.toggle-label {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-
-.toggle-label:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-
-.toggle-checkbox:checked + .toggle-label {
-    background-color: #2196F3;
-}
-
-.toggle-checkbox:checked + .toggle-label:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-/* refresh button */
-#refresh-button {
     display: block;
-    margin: 10px auto;
-    padding: 8px 15px;
-    background-color: #4CAF50;
-    color: white;
+    margin: 0 auto 10px;
+}
+
+#options-link {
+    display: block;
+    margin-top: 10px;
+    color: #007bff; 
+    text-decoration: none;
+}
+
+.card {
+    margin-top: 20px;
+}
+
+.card-header {
+    background-color: #f8f9fa; 
+    border-bottom: 1px solid #e9ecef; 
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.custom-switch .custom-control-label::after {
+    background-color: #fff;
+}
+
+.custom-switch .custom-control-label::before {
+    background-color: #ddd;
+    border-color: #ddd;
+}
+
+.custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #007bff; 
+    border-color: #007bff;
+}
+
+/* Whitelist URL display */
+.whitelist-container span {
+    display: block;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Refresh button */
+#refresh-button {
+    background-color: #28a745;
     border: none;
-    border-radius: 4px;
+    color: white;
+    padding: 8px 16px;
+    font-size: 16px;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 #refresh-button:hover {
-    background-color: #45a049;
+    background-color: #218838;
+}
+
+/* Custom control enhancements */
+.custom-control-label::after, .custom-control-label::before {
+    top: .8rem;
+    width: 3rem;
+    height: 2rem;
+}
+
+.custom-control-input:checked ~ .custom-control-label::after {
+    background-color: #fff;
+    transform: translateX(.875rem);
+}
+
+/* URL display size adjustment */
+#current-site-url, #current-domain {
+    font-size: 11px; 
+    margin-top: 5px;
+}
+
+/* Customize Bootstrap switch */
+.custom-control {
+    padding-left: 0; /* Remove default padding */
+}
+
+.custom-control-label::after, .custom-control-label::before {
+    top: .8rem;
+    width: 1.75rem; 
+    height: .875rem; 
+}
+
+.custom-control-input:checked ~ .custom-control-label::after {
+    background-color: #fff;
+    transform: translateX(.875rem);
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #007bff; 
+    border-color: #007bff; 
+}
+
+/* Card customization for top section */
+.card.bg-light {
+    background-color: #f8f9fa; 
+    margin-bottom: 20px; 
+}
+
+/* Options button styling */
+#options-button.btn-primary {
+    background-color: #007bff; 
+    border-color: #007bff; 
+}
+
+/* URL display size adjustment */
+#current-site-url, #current-domain {
+    font-size: 10px; 
+    margin-top: 15px; 
+}
+
+/* Enhanced Custom Checkbox Styles */
+.custom-control-input {
+    position: absolute;
+    left: -9999px; 
+}
+
+.custom-control-label {
+    position: relative;
+    padding-left: 2.5em;
+    cursor: pointer;
+}
+
+.custom-control-label:before, .custom-control-label:after {
+    content: '';
+    position: absolute;
+    top: 0.25em;
+    left: 0;
+    width: 1.75em;
+    height: 1em;
+    border-radius: 0.5em;
+    background: #ddd;
+    transition: background 0.3s ease;
+}
+
+.custom-control-label:after {
+    width: 1em;
+    height: 1em;
+    background: white;
+    border-radius: 50%;
+    transform: scale(0.7);
+    transition: transform 0.3s ease;
+}
+
+.custom-control-input:checked ~ .custom-control-label:before {
+    background: #007bff; 
+}
+
+.custom-control-input:checked ~ .custom-control-label:after {
+    transform: scale(1) translateX(0.75em);
+}
+
+/* Custom control */
+.custom-control.custom-switch {
+    margin: 0px;
+    background-color: #ffffff; /* White background */
+    padding: 10px;
+    border-radius: 4px;
+}
+
+#options-button.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Whitelist card */
+.card {
+    margin-top: 0px;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    text-align: center;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+/* Whitelist URL display */
+#current-site-url, #current-domain {
+    font-size: 12px; 
+    margin-top: 5px; 
+}
+
+/* Button styling */
+.btn {
+    padding: 8px 16px; 
+    font-size: 16px; 
+    border-radius: 4px; 
+    border: 1px solid transparent; 
+    margin: 0 5px;
+}
+
+#options-button.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+#refresh-button.btn-secondary {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+#refresh-button.btn-secondary:hover {
+    background-color: #218838; 
+}
+
+/* Button container with border */
+.text-center.mb-3 {
+    border: 1px solid #ddd; 
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px; 
+}
+
+/* Whitelist card styling */
+.card {
+    margin-bottom: 20px;
+}
+
+.button-container {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    background-color: #ffffff; 
+}
+
+.switch-container {
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #ffffff; 
+    border-radius: 4px; 
+    border: 1px solid #ddd;
+    padding: -20px;
+}
+
+.custom-control.custom-switch {
+    display: inline-block; 
 }

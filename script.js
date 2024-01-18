@@ -1,6 +1,20 @@
 let debounceTimer;
+let whitelist = [];
+
+// Initiate whitelist cache
+chrome.storage.sync.get({whitelist: []}, function(data) {
+    if (chrome.runtime.lastError) {
+        console.error("Error retrieving whitelist:", chrome.runtime.lastError);
+        return;
+    }
+    whitelist = data.whitelist;
+});
 
 chrome.storage.sync.get('enabled', function(data) {
+    if (chrome.runtime.lastError) {
+        console.error("Error retrieving 'enabled' status:", chrome.runtime.lastError);
+        return;
+    }
     if (data.enabled !== false) {
         document.body.addEventListener('mouseover', handleMouseOver);
         document.body.addEventListener('mouseout', handleMouseOut);
@@ -10,10 +24,13 @@ chrome.storage.sync.get('enabled', function(data) {
 function handleMouseOver(event) {
     let target = event.target.closest('a');
     if (target && target.href) {
-        if (debounceTimer) {
-            clearTimeout(debounceTimer);
+        let domain = getDomainName(new URL(target.href).hostname);
+        if (!whitelist.includes(domain)) {
+            if (debounceTimer) {
+                clearTimeout(debounceTimer);
+            }
+            debounceTimer = setTimeout(() => showFloatingWindow(target.href, target), 100);
         }
-        debounceTimer = setTimeout(() => showFloatingWindow(target.href, target), 200);
     }
 }
 
@@ -28,8 +45,7 @@ function handleMouseOut(event) {
 
 //dynamic loading continue to watch dom
 const observer = new MutationObserver(mutations => {
-    mutations.forEach(mutation => {
-    });
+    mutations.forEach(mutation => {});
 });
 
 // Start observing DOM
@@ -86,3 +102,12 @@ function hideFloatingWindow() {
         floatingWindow.style.display = 'none';
     }
 }
+
+//listener for changes to whitelist
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+    for (let key in changes) {
+        if (key === 'whitelist' && namespace === 'sync') {
+            whitelist = changes[key].newValue;
+        }
+    }
+});

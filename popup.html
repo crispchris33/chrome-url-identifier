@@ -2,17 +2,49 @@
 <html>
 <head>
     <title>Link Hover Info</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="popup.css">
 </head>
 <body>
-    <div id="popup-content">
-        <h1>Link Hover Info</h1>
-        <p>This extension shows the real URL of links in a floating window on hover.</p>
-        <div class="toggle-switch">
-            <input type="checkbox" id="toggle-extension" class="toggle-checkbox">
-            <label for="toggle-extension" class="toggle-label"></label>
+    <div id="popup-content" class="container">
+        <div class="card">
+            <div class="card-header"><h2>URL Detail</h2></div>
         </div>
-        <button id="refresh-button">Refresh</button>
+
+        <div class="switch-container">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="toggle-extension">
+                <label class="custom-control-label" for="toggle-extension">Enable Extension</label>
+            </div>
+        </div>
+        
+        <div class="text-center mb-3 button-container">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <button id="options-button" class="btn btn-primary">Options</button>
+                </div>
+                <div class="col-auto">
+                    <button id="refresh-button" class="btn btn-secondary">Refresh</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Whitelist</div>
+            <div class="card-body">
+                <div class="custom-control custom-switch mb-2">
+                    <input type="checkbox" class="custom-control-input" id="whitelist-site-toggle">
+                    <label class="custom-control-label" for="whitelist-site-toggle">Whitelist Current Site (Full URL):</label>
+                    <span id="current-site-url" class="d-block mt-1"></span>
+                </div>
+
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="whitelist-domain-toggle">
+                    <label class="custom-control-label" for="whitelist-domain-toggle">Whitelist Domain Only:</label>
+                    <span id="current-domain" class="d-block mt-1"></span>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="popup.js"></script>
 </body>
