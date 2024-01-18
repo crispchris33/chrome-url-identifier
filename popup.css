@@ -95,15 +95,13 @@ h2 {
     transform: translateX(.875rem);
 }
 
-/* URL display size adjustment */
 #current-site-url, #current-domain {
     font-size: 11px; 
     margin-top: 5px;
 }
 
-/* Customize Bootstrap switch */
 .custom-control {
-    padding-left: 0; /* Remove default padding */
+    padding-left: 0;
 }
 
 .custom-control-label::after, .custom-control-label::before {
@@ -122,19 +120,18 @@ h2 {
     border-color: #007bff; 
 }
 
-/* Card customization for top section */
+/* Card top section */
 .card.bg-light {
     background-color: #f8f9fa; 
     margin-bottom: 20px; 
 }
 
-/* Options button styling */
+/* Options button */
 #options-button.btn-primary {
     background-color: #007bff; 
     border-color: #007bff; 
 }
 
-/* URL display size adjustment */
 #current-site-url, #current-domain {
     font-size: 10px; 
     margin-top: 15px; 
@@ -184,7 +181,7 @@ h2 {
 /* Custom control */
 .custom-control.custom-switch {
     margin: 0px;
-    background-color: #ffffff; /* White background */
+    background-color: #ffffff;
     padding: 10px;
     border-radius: 4px;
 }
@@ -246,7 +243,6 @@ h2 {
     border-radius: 4px; 
 }
 
-/* Whitelist card styling */
 .card {
     margin-bottom: 20px;
 }
