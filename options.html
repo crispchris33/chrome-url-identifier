@@ -1,22 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Extension Options</title>
+  <title>Link Hover Info</title>
+  <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="options.css">
 </head>
 <body>
-  <h1>Extension Options</h1>
+  <div class="main-container">
+    <div class="logo-title-container">
+      <div class="inner-logo-title">
+        <img src="icon_48x48.png" alt="Logo" class="logo-img">
+        <h1>URL Detail</h1>
+      </div>
+    </div>
 
-  <div>
-    <label>
-      <input type="checkbox" id="toggle-extension"> Enable Extension
-    </label>
-    <button id="refresh-button">Refresh</button>
-  </div>
+    <div class="extension-options-container">
+      <h2>Extension Options</h2>
+      <div class="options-row">
+        <div class="switch-container">
+          <input type="checkbox" class="custom-control-input" id="toggle-extension">
+          <label class="custom-control-label" for="toggle-extension">Enable Extension</label>
+        </div>
+        <button id="refresh-button" class="btn btn-primary">Refresh</button>
+      </div>
+    </div>
 
-  <div id="whitelist-section">
-    <h2>Whitelisted Sites</h2>
-    <ul id="whitelist"></ul>
+    <div class="whitelist-management-container">
+      <h2>Whitelist Management</h2>
+      <table id="whitelist-table" class="table">
+        <thead>
+          <tr>
+            <th class="url-column">URL</th>
+            <th class="actions-column">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="whitelist">
+        </tbody>
+      </table>
+    </div>
+
+    <footer class="text-center my-4">
+      <small>&copy; 2024 URL Detail - urldetail.com</small>
+    </footer>
   </div>
 
   <script src="options.js"></script>
