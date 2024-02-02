@@ -11,24 +11,22 @@
       "<all_urls>"
     ],
     "action": {
-      "default_popup": "popup.html",
+      "default_popup": "Project/popup.html",
       "default_icon": {
-        "16": "icon_16x16.png",
-        "48": "icon_48x48.png",
-        "128": "icon_128x128.png"
+        "16": "Project/icon_16x16.png",
+        "48": "Project/icon_48x48.png",
+        "128": "Project/icon_128x128.png"
       }
     },
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["script.js"],
-        "css": ["style.css"]
-      }
-    ],
+    "content_scripts": [{
+      "matches": ["<all_urls>"],
+      "js": ["Project/script.js"],
+      "css": ["Project/style.css"]
+    }],
     "icons": {
-      "16": "icon_16x16.png",
-      "48": "icon_48x48.png",
-      "128": "icon_128x128.png"
+      "16": "Project/icon_16x16.png",
+      "48": "Project/icon_48x48.png",
+      "128": "Project/icon_128x128.png"
     },
-    "options_page": "options.html"
-}
+    "options_page": "Project/options.html"
+  }
