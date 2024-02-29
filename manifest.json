@@ -13,9 +13,9 @@
     "action": {
       "default_popup": "Project/popup.html",
       "default_icon": {
-        "16": "Project/icon_16x16.png",
-        "48": "Project/icon_48x48.png",
-        "128": "Project/icon_128x128.png"
+        "16": "Project/icon16x16.png",
+        "48": "Project/icon48x48.png",
+        "128": "Project/icon128x128.png"
       }
     },
     "content_scripts": [{
@@ -24,9 +24,9 @@
       "css": ["Project/style.css"]
     }],
     "icons": {
-      "16": "Project/icon_16x16.png",
-      "48": "Project/icon_48x48.png",
-      "128": "Project/icon_128x128.png"
+      "16": "Project/icon16x16.png",
+      "48": "Project/icon48x48.png",
+      "128": "Project/icon128x128.png"
     },
     "options_page": "Project/options.html"
   }
