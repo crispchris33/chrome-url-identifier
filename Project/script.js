@@ -61,7 +61,44 @@ function showFloatingWindow(url, linkElement) {
 
     let domainName = getDomainName(new URL(url).hostname);
 
-    floatingWindow.innerHTML = `<strong>Link Text:</strong> ${linkElement.textContent}<br><strong>Link URL:</strong> ${url}<br><strong>Domain:</strong> <span class='highlighted-domain'>${domainName}</span>`;
+    // Clear the existing content
+    floatingWindow.textContent = '';
+
+    // Create and append the 'Link Text:' label
+    let linkTextLabel = document.createElement('strong');
+    linkTextLabel.textContent = 'Link Text: ';
+    floatingWindow.appendChild(linkTextLabel);
+
+    // Create and append the link text
+    let linkText = document.createTextNode(linkElement.textContent);
+    floatingWindow.appendChild(linkText);
+
+    floatingWindow.appendChild(document.createElement('br'));
+
+    // Create and append the 'Link URL:' label
+    let linkUrlLabel = document.createElement('strong');
+    linkUrlLabel.textContent = 'Link URL: ';
+    floatingWindow.appendChild(linkUrlLabel);
+
+    // Create and append the URL text
+    let urlText = document.createTextNode(url);
+    floatingWindow.appendChild(urlText);
+
+    floatingWindow.appendChild(document.createElement('br'));
+
+    // Create and append the 'Domain:' label
+    let domainLabel = document.createElement('strong');
+    domainLabel.textContent = 'Domain: ';
+    floatingWindow.appendChild(domainLabel);
+
+    // Create and append the domain name text
+    let domainText = document.createTextNode(domainName);
+
+    // Append a span with class 'highlighted-domain' for styling if needed
+    let domainSpan = document.createElement('span');
+    domainSpan.className = 'highlighted-domain';
+    domainSpan.appendChild(domainText);
+    floatingWindow.appendChild(domainSpan);
 
     positionFloatingWindow(floatingWindow, linkElement);
 }

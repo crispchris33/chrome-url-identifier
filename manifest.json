@@ -28,5 +28,8 @@
       "48": "Project/icon48x48.png",
       "128": "Project/icon128x128.png"
     },
-    "options_page": "Project/options.html"
+    "options_page": "Project/options.html",
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
+    }
   }
