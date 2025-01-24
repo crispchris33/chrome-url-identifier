@@ -109,3 +109,29 @@ document.getElementById('options-button').addEventListener('click', function() {
         window.open(chrome.runtime.getURL('options.html'));
     }
 });
+
+//reddit search functionality
+document.addEventListener('DOMContentLoaded', function () {
+    const redditSearchButton = document.getElementById('reddit-search-button');
+
+    redditSearchButton.addEventListener('click', function () {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            const currentUrl = tabs[0].url;
+            const googleRedditSearch = `https://www.google.com/search?q=site:reddit.com ${encodeURIComponent(currentUrl)}`;
+            chrome.tabs.create({ url: googleRedditSearch });
+        });
+    });
+});
+
+//VT Search Functionality
+document.addEventListener('DOMContentLoaded', function () {
+    const virusTotalButton = document.getElementById('virustotal-search-button');
+
+    virusTotalButton.addEventListener('click', function () {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            const currentUrl = tabs[0].url;
+            const virusTotalUrl = `https://www.virustotal.com/gui/url/${encodeURIComponent(currentUrl)}/detection`;
+            chrome.tabs.create({ url: virusTotalUrl });
+        });
+    });
+});

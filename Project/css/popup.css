@@ -37,21 +37,6 @@ h2 {
     border-color: #007bff;
 }
 
-/* Refresh button */
-#refresh-button {
-    background-color: #28a745;
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-#refresh-button:hover {
-    background-color: #218838;
-}
-
 /* Custom control enhancements */
 .custom-control-label::after, .custom-control-label::before {
     top: .8rem;
@@ -90,13 +75,6 @@ h2 {
 .custom-control-input:checked ~ .custom-control-label::before {
     background-color: #007bff; 
     border-color: #007bff; 
-}
-
-/* Options button */
-#options-button.btn-primary {
-    background-color: #007bff; 
-    border-color: #007bff;
-    border-radius: 30px;
 }
 
 /* Enhanced Custom Checkbox Styles */
@@ -149,10 +127,6 @@ h2 {
     border-radius: 4px;
 }
 
-#options-button.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-}
 
 /* Whitelist card */
 .card {
@@ -179,20 +153,6 @@ div.card-header:first-child {
     margin: 0 5px;
 }
 
-#options-button.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-#refresh-button.btn-secondary {
-    background-color: #28a745;
-    border-color: #28a745;
-    border-radius: 30px;
-}
-
-#refresh-button.btn-secondary:hover {
-    background-color: #218838; 
-}
 
 /* Button container with border */
 .text-center.mb-3 {
@@ -235,6 +195,8 @@ div.card-header:first-child {
     display: inline-block; 
 }
 
+
+
 /* URL label styling */
 .url-label {
     display: inline-block;
@@ -269,4 +231,120 @@ div.card-header:first-child {
     color: #007bff;
     word-break: break-all;
     overflow-wrap: break-word;
+}
+
+
+
+/* General Button Container */
+.button-section {
+    margin-top: 5px;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+}
+
+.button-section .button-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 5px;
+}
+
+.button-section.mb-3 {
+    margin-bottom: 0 !important;
+}
+
+
+/* Reddit Button */
+.btn-reddit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #FF4500;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-reddit:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.icon-reddit {
+    width: 24px; 
+    height: 24px;
+}
+
+/* VirusTotal Button */
+.btn-virustotal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #0078D7;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-virustotal:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.icon-virustotal svg {
+    width: 24px; 
+    height: 24px;
+    fill: white;
+}
+
+
+/* new button styling */
+#options-button, #refresh-button, #sidebar-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #007BFF; 
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 18px; /
+    font-size: 16px; 
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#options-button:hover, #refresh-button:hover, #sidebar-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.3);
+}
+
+#options-button {
+    background-color: #007BFF;
+}
+
+#refresh-button {
+    background-color: #28A745;
+}
+
+#sidebar-button {
+    background-color: #6C757D;
 }

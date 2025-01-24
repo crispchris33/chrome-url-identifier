@@ -21,10 +21,13 @@
         <div class="text-center mb-3 button-container">
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    <button id="options-button" class="btn btn-primary">Options</button>
+                    <button id="options-button" class="btn-options">Options</button>
                 </div>
                 <div class="col-auto">
-                    <button id="refresh-button" class="btn btn-secondary">Refresh</button>
+                    <button id="refresh-button" class="btn-refresh">Refresh</button>
+                </div>
+                <div class="col-auto">
+                    <button id="sidebar-button" class="btn-sidebar">Sidebar</button>
                 </div>
             </div>
         </div>
@@ -51,6 +54,26 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="text-center mb-3 button-section">
+            <div class="button-row">
+                <button id="reddit-search-button" class="btn-reddit">
+                    <img src="https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png" alt="Reddit Icon" class="icon-reddit">
+                    Reddit Search
+                </button>                    
+                <button id="virustotal-search-button" class="btn-virustotal">
+                    <span class="icon-virustotal">
+                        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 100 89">
+                            <path fill-rule="evenodd" d="M45.292 44.5 0 89h100V0H0l45.292 44.5zM90 80H22l35.987-35.2L22 9h68v71z"></path>
+                        </svg>
+                    </span>
+                    VirusTotal Search
+                </button>                    
+            </div>
+        </div>
+        
+
     </div>
     <script src="../js/popup.js"></script>
 </body>
