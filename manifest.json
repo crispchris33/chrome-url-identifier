@@ -5,7 +5,9 @@
     "description": "Displays the real URL of links in a floating window on hover.",
     "permissions": [
       "activeTab",
-      "storage"
+      "scripting",
+      "storage",
+      "tabs"
     ],
     "host_permissions": [
       "<all_urls>"

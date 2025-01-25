@@ -1,7 +1,127 @@
-//popup functionality - enable button, refresh button
+// Utility Functions
+function openSidebar() {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        if (tabs.length === 0) {
+            console.error("No active tab found.");
+            return;
+        }
+
+        const tab = tabs[0];
+
+        // Check if the tab's URL is valid for script injection
+        if (!tab.url || tab.url.startsWith("chrome://") || tab.url.startsWith("about:")) {
+            console.error("Cannot inject script into this tab:", tab.url);
+            alert("The sidebar cannot be opened in this tab.");
+            return;
+        }
+
+        const tabId = tab.id;
+
+        chrome.scripting.executeScript({
+            target: { tabId: tabId },
+            func: () => {
+                // Check if sidebar already exists
+                if (document.getElementById("custom-sidebar")) {
+                    console.log("Sidebar already exists. Toggling visibility.");
+                    const sidebar = document.getElementById("custom-sidebar");
+                    sidebar.style.display = sidebar.style.display === "none" ? "block" : "none";
+                    return;
+                }
+
+                // Create the sidebar
+                const sidebar = document.createElement("div");
+                sidebar.id = "custom-sidebar";
+                sidebar.style.position = "fixed";
+                sidebar.style.top = "0";
+                sidebar.style.right = "0";
+                sidebar.style.width = "300px";
+                sidebar.style.height = "100%";
+                sidebar.style.backgroundColor = "#ffffff";
+                sidebar.style.boxShadow = "0 0 10px rgba(0,0,0,0.3)";
+                sidebar.style.zIndex = "9999";
+                sidebar.style.overflowY = "auto";
+                sidebar.style.borderLeft = "1px solid #ddd";
+
+                // Add content to the sidebar
+                const content = document.createElement("div");
+                content.style.padding = "20px";
+                content.innerHTML = `
+                    <h2>Custom Sidebar</h2>
+                    <p>This is your sidebar content!</p>
+                `;
+
+                // Close button
+                const closeButton = document.createElement("button");
+                closeButton.textContent = "Close";
+                closeButton.style.position = "absolute";
+                closeButton.style.top = "10px";
+                closeButton.style.right = "10px";
+                closeButton.style.padding = "5px 10px";
+                closeButton.style.backgroundColor = "#f44336";
+                closeButton.style.color = "#fff";
+                closeButton.style.border = "none";
+                closeButton.style.cursor = "pointer";
+                closeButton.style.borderRadius = "3px";
+
+                closeButton.addEventListener("click", () => {
+                    sidebar.style.display = "none";
+                });
+
+                sidebar.appendChild(closeButton);
+                sidebar.appendChild(content);
+                document.body.appendChild(sidebar);
+            }
+        });
+
+        // Close the popup after injecting the sidebar
+        window.close();
+    });
+}
+
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const toggleButton = document.getElementById('toggle-extension');
+
+    // Add event listener for Reddit button
+    const redditButton = document.getElementById("reddit-search-button");
+    if (redditButton) {
+        redditButton.addEventListener("click", openSidebar);
+    }
+
+    // Add event listener for Sidebar button
+    const sidebarButton = document.getElementById("sidebar-button");
+    if (sidebarButton) {
+        sidebarButton.addEventListener("click", openSidebar);
+    }
+
+    // Add event listener for VT button
+    const vtButton = document.getElementById("virustotal-search-button");
+    if (vtButton) {
+        vtButton.addEventListener("click", async () => {
+            try {
+                const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+                if (!tab.url) {
+                    alert("Unable to retrieve the current tab URL.");
+                    return;
+                }
+
+                const virusTotalLink = generateVirusTotalLink(tab.url);
+                if (virusTotalLink) {
+                    chrome.tabs.create({ url: virusTotalLink });
+                } else {
+                    alert("Failed to generate VirusTotal link.");
+                }
+
+                // Close the popup after opening the link
+                window.close();
+            } catch (error) {
+                console.error("Error opening VirusTotal link:", error);
+                alert("An error occurred. Please try again.");
+            }
+        });
+    }
 
     chrome.storage.sync.get('enabled', function(data) {
         if (data && typeof data.enabled !== 'undefined') {
@@ -47,21 +167,8 @@ document.addEventListener('DOMContentLoaded', function() {
             updateWhitelist(domainToggle.checked, baseDomain);
         });
     });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var optionsButton = document.getElementById('options-button');
-        if (optionsButton) {
-            optionsButton.addEventListener('click', function() {
-                if (chrome.runtime.openOptionsPage) {
-                    chrome.runtime.openOptionsPage();
-                } else {
-                    window.open(chrome.runtime.getURL('options.html'));
-                }
-            });
-        }
-    });
-
 });
+
 
 document.getElementById('refresh-button').addEventListener('click', function() {
     chrome.tabs.reload();
@@ -110,28 +217,23 @@ document.getElementById('options-button').addEventListener('click', function() {
     }
 });
 
-//reddit search functionality
-document.addEventListener('DOMContentLoaded', function () {
-    const redditSearchButton = document.getElementById('reddit-search-button');
-
-    redditSearchButton.addEventListener('click', function () {
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            const currentUrl = tabs[0].url;
-            const googleRedditSearch = `https://www.google.com/search?q=site:reddit.com ${encodeURIComponent(currentUrl)}`;
-            chrome.tabs.create({ url: googleRedditSearch });
-        });
-    });
-});
-
 //VT Search Functionality
-document.addEventListener('DOMContentLoaded', function () {
-    const virusTotalButton = document.getElementById('virustotal-search-button');
+function base64urlEncode(str) {
+    return btoa(str)
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=+$/, '');
+}
 
-    virusTotalButton.addEventListener('click', function () {
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            const currentUrl = tabs[0].url;
-            const virusTotalUrl = `https://www.virustotal.com/gui/url/${encodeURIComponent(currentUrl)}/detection`;
-            chrome.tabs.create({ url: virusTotalUrl });
-        });
-    });
-});
+function generateVirusTotalLink(pageUrl) {
+    if (!pageUrl) {
+        console.error("Please provide a valid URL.");
+        return null;
+    }
+
+    const encodedUrl = base64urlEncode(pageUrl.trim());
+
+    const virusTotalUrl = `https://www.virustotal.com/gui/url/${encodedUrl}/detection`;
+
+    return virusTotalUrl;
+}
