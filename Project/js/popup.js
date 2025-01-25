@@ -1,4 +1,4 @@
-// Utility Functions
+// sidebar function
 function openSidebar() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         if (tabs.length === 0) {
@@ -8,7 +8,7 @@ function openSidebar() {
 
         const tab = tabs[0];
 
-        // Check if the tab's URL is valid for script injection
+        // Check if the tab URL is valid for script injection
         if (!tab.url || tab.url.startsWith("chrome://") || tab.url.startsWith("about:")) {
             console.error("Cannot inject script into this tab:", tab.url);
             alert("The sidebar cannot be opened in this tab.");
@@ -20,7 +20,7 @@ function openSidebar() {
         chrome.scripting.executeScript({
             target: { tabId: tabId },
             func: () => {
-                // Check if sidebar already exists
+                // check if sidebar already exists
                 if (document.getElementById("custom-sidebar")) {
                     console.log("Sidebar already exists. Toggling visibility.");
                     const sidebar = document.getElementById("custom-sidebar");
@@ -28,7 +28,7 @@ function openSidebar() {
                     return;
                 }
 
-                // Create the sidebar
+                // create the sidebar
                 const sidebar = document.createElement("div");
                 sidebar.id = "custom-sidebar";
                 sidebar.style.position = "fixed";
@@ -42,7 +42,6 @@ function openSidebar() {
                 sidebar.style.overflowY = "auto";
                 sidebar.style.borderLeft = "1px solid #ddd";
 
-                // Add content to the sidebar
                 const content = document.createElement("div");
                 content.style.padding = "20px";
                 content.innerHTML = `
@@ -50,7 +49,6 @@ function openSidebar() {
                     <p>This is your sidebar content!</p>
                 `;
 
-                // Close button
                 const closeButton = document.createElement("button");
                 closeButton.textContent = "Close";
                 closeButton.style.position = "absolute";
@@ -73,7 +71,6 @@ function openSidebar() {
             }
         });
 
-        // Close the popup after injecting the sidebar
         window.close();
     });
 }
@@ -84,19 +81,16 @@ function openSidebar() {
 document.addEventListener('DOMContentLoaded', function() {
     const toggleButton = document.getElementById('toggle-extension');
 
-    // Add event listener for Reddit button
     const redditButton = document.getElementById("reddit-search-button");
     if (redditButton) {
         redditButton.addEventListener("click", openSidebar);
     }
 
-    // Add event listener for Sidebar button
     const sidebarButton = document.getElementById("sidebar-button");
     if (sidebarButton) {
         sidebarButton.addEventListener("click", openSidebar);
     }
 
-    // Add event listener for VT button
     const vtButton = document.getElementById("virustotal-search-button");
     if (vtButton) {
         vtButton.addEventListener("click", async () => {
@@ -114,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert("Failed to generate VirusTotal link.");
                 }
 
-                // Close the popup after opening the link
                 window.close();
             } catch (error) {
                 console.error("Error opening VirusTotal link:", error);
