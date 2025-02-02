@@ -1,96 +1,55 @@
-// sidebar function
-function openSidebar() {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        if (tabs.length === 0) {
-            console.error("No active tab found.");
-            return;
-        }
+document.addEventListener("DOMContentLoaded", function () {
+    // Function to Open Sidebar
+    function openSidebar() {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            if (tabs.length === 0) return;
 
-        const tab = tabs[0];
+            const tab = tabs[0];
 
-        // Check if the tab URL is valid for script injection
-        if (!tab.url || tab.url.startsWith("chrome://") || tab.url.startsWith("about:")) {
-            console.error("Cannot inject script into this tab:", tab.url);
-            alert("The sidebar cannot be opened in this tab.");
-            return;
-        }
+            if (!tab.url || tab.url.startsWith("chrome://") || tab.url.startsWith("about:")) {
+                alert("The sidebar cannot be opened in this tab.");
+                return;
+            }
 
-        const tabId = tab.id;
+            chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                files: ["Project/js/sidebar-inject.js"]
+            }).catch(() => {});
 
-        chrome.scripting.executeScript({
-            target: { tabId: tabId },
-            func: () => {
-                // check if sidebar already exists
-                if (document.getElementById("custom-sidebar")) {
-                    console.log("Sidebar already exists. Toggling visibility.");
-                    const sidebar = document.getElementById("custom-sidebar");
-                    sidebar.style.display = sidebar.style.display === "none" ? "block" : "none";
-                    return;
-                }
+            // Close popup on sidebar open
+            window.close();
+        });
+    }
 
-                // create the sidebar
-                const sidebar = document.createElement("div");
-                sidebar.id = "custom-sidebar";
-                sidebar.style.position = "fixed";
-                sidebar.style.top = "0";
-                sidebar.style.right = "0";
-                sidebar.style.width = "300px";
-                sidebar.style.height = "100%";
-                sidebar.style.backgroundColor = "#ffffff";
-                sidebar.style.boxShadow = "0 0 10px rgba(0,0,0,0.3)";
-                sidebar.style.zIndex = "9999";
-                sidebar.style.overflowY = "auto";
-                sidebar.style.borderLeft = "1px solid #ddd";
+    // Sidebar Button
+    const sidebarButton = document.getElementById("sidebar-button");
+    if (sidebarButton) sidebarButton.addEventListener("click", openSidebar);
 
-                const content = document.createElement("div");
-                content.style.padding = "20px";
-                content.innerHTML = `
-                    <h2>Custom Sidebar</h2>
-                    <p>This is your sidebar content!</p>
-                `;
+    // Reddit Search Button - Opens Sidebar
+    const redditButton = document.getElementById("reddit-search-button");
+    if (redditButton) redditButton.addEventListener("click", openSidebar);
 
-                const closeButton = document.createElement("button");
-                closeButton.textContent = "Close";
-                closeButton.style.position = "absolute";
-                closeButton.style.top = "10px";
-                closeButton.style.right = "10px";
-                closeButton.style.padding = "5px 10px";
-                closeButton.style.backgroundColor = "#f44336";
-                closeButton.style.color = "#fff";
-                closeButton.style.border = "none";
-                closeButton.style.cursor = "pointer";
-                closeButton.style.borderRadius = "3px";
+    // Refresh Button
+    const refreshButton = document.getElementById("refresh-button");
+    if (refreshButton) {
+        refreshButton.addEventListener("click", function() {
+            chrome.tabs.reload();
+        });
+    }
 
-                closeButton.addEventListener("click", () => {
-                    sidebar.style.display = "none";
-                });
-
-                sidebar.appendChild(closeButton);
-                sidebar.appendChild(content);
-                document.body.appendChild(sidebar);
+    // Options Button
+    const optionsButton = document.getElementById("options-button");
+    if (optionsButton) {
+        optionsButton.addEventListener("click", function() {
+            if (chrome.runtime.openOptionsPage) {
+                chrome.runtime.openOptionsPage();
+            } else {
+                window.open(chrome.runtime.getURL('options.html'));
             }
         });
-
-        window.close();
-    });
-}
-
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    const toggleButton = document.getElementById('toggle-extension');
-
-    const redditButton = document.getElementById("reddit-search-button");
-    if (redditButton) {
-        redditButton.addEventListener("click", openSidebar);
     }
 
-    const sidebarButton = document.getElementById("sidebar-button");
-    if (sidebarButton) {
-        sidebarButton.addEventListener("click", openSidebar);
-    }
-
+    // VT Search Button
     const vtButton = document.getElementById("virustotal-search-button");
     if (vtButton) {
         vtButton.addEventListener("click", async () => {
@@ -109,34 +68,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 window.close();
-            } catch (error) {
-                console.error("Error opening VirusTotal link:", error);
+            } catch {
                 alert("An error occurred. Please try again.");
             }
         });
     }
 
-    chrome.storage.sync.get('enabled', function(data) {
-        if (data && typeof data.enabled !== 'undefined') {
-            toggleButton.checked = data.enabled;
-        } else {
-            toggleButton.checked = true;
-        }
-    });
+    // Toggle Switch
+    const toggleButton = document.getElementById('toggle-extension');
+    if (toggleButton) {
+        chrome.storage.sync.get('enabled', function(data) {
+            toggleButton.checked = data.enabled ?? true;
+        });
 
-    toggleButton.addEventListener('change', function() {
-        chrome.storage.sync.set({ 'enabled': toggleButton.checked });
-    });
+        toggleButton.addEventListener('change', function() {
+            chrome.storage.sync.set({ 'enabled': toggleButton.checked });
+        });
+    }
 
+    // Whitelist Toggles
     const siteToggle = document.getElementById('whitelist-site-toggle');
     const domainToggle = document.getElementById('whitelist-domain-toggle');
     const currentSiteUrlElement = document.getElementById('current-site-url');
     const currentDomainElement = document.getElementById('current-domain');
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        let fullUrl = tabs[0].url;
-        let domain = getDomainName(new URL(fullUrl).hostname);
+        let fullUrl = tabs[0]?.url;
+        if (!fullUrl) return;
 
+        let domain = getDomainName(new URL(fullUrl).hostname);
         currentSiteUrlElement.textContent = fullUrl;
         currentDomainElement.textContent = domain;
 
@@ -146,27 +106,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    siteToggle.addEventListener('change', function() {
+    siteToggle?.addEventListener('change', function() {
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            let fullUrl = tabs[0].url;
-            updateWhitelist(siteToggle.checked, fullUrl);
+            let fullUrl = tabs[0]?.url;
+            if (fullUrl) updateWhitelist(siteToggle.checked, fullUrl);
         });
     });
 
-    domainToggle.addEventListener('change', function() {
+    domainToggle?.addEventListener('change', function() {
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            let url = new URL(tabs[0].url);
+            let url = new URL(tabs[0]?.url);
             let baseDomain = getDomainName(url.hostname);
             updateWhitelist(domainToggle.checked, baseDomain);
         });
     });
 });
 
-
-document.getElementById('refresh-button').addEventListener('click', function() {
-    chrome.tabs.reload();
-});
-
+// Whitelist Logic
 function updateWhitelist(enabled, domain) {
     chrome.storage.sync.get({whitelist: []}, function(data) {
         let whitelist = data.whitelist;
@@ -182,7 +138,7 @@ function updateWhitelist(enabled, domain) {
     });
 }
 
-//logic for tlds with 2 part domain
+// Logic for TLDs with 2-part domain
 function getDomainName(hostname) {
     const twoPartTlds = [
         'co.uk', 'com.au', 'com.br', 'co.jp', 'co.nz', 'co.za', 
@@ -201,7 +157,7 @@ function getDomainName(hostname) {
     return parts.slice(-2).join('.');
 }
 
-//options button link
+// Options Button Link
 document.getElementById('options-button').addEventListener('click', function() {
     if (chrome.runtime.openOptionsPage) {
         chrome.runtime.openOptionsPage();
@@ -210,7 +166,7 @@ document.getElementById('options-button').addEventListener('click', function() {
     }
 });
 
-//VT Search Functionality
+// VT Search Functionality
 function base64urlEncode(str) {
     return btoa(str)
         .replace(/\+/g, '-')
@@ -219,14 +175,8 @@ function base64urlEncode(str) {
 }
 
 function generateVirusTotalLink(pageUrl) {
-    if (!pageUrl) {
-        console.error("Please provide a valid URL.");
-        return null;
-    }
+    if (!pageUrl) return null;
 
     const encodedUrl = base64urlEncode(pageUrl.trim());
-
-    const virusTotalUrl = `https://www.virustotal.com/gui/url/${encodedUrl}/detection`;
-
-    return virusTotalUrl;
+    return `https://www.virustotal.com/gui/url/${encodedUrl}/detection`;
 }
