@@ -14,7 +14,6 @@
     top: 0;
     right: 0;
     width: 400px;
-    height: 100%;
     background-color: #fff;
     box-shadow: -2px 0 10px rgba(0,0,0,0.3);
     z-index: 2147483647;
@@ -44,7 +43,7 @@
         border-radius: 30px;
         border: none;
         font-weight: bold;
-        font-size: 14px;
+        font-size: 18px;
         background: #ff4500;
         color: #fff;
         cursor: pointer;
@@ -62,7 +61,7 @@
         border-radius: 30px;
         border: none;
         font-weight: bold;
-        font-size: 14px;
+        font-size: 18px;
         background: #e0e0e0;
         color: #333;
         cursor: pointer;
@@ -80,17 +79,42 @@
     </div>
 
     <div id="panels" style="margin-top: 20px;">
-      <div id="reddit-panel" class="panel" style="display: block;">
-        <h3 style="margin-bottom: 10px;">Reddit Page Title Search</h3>
-        <p style="margin-bottom: 10px;">Select a title to search Reddit:</p>
-        <div id="title-options" style="margin-bottom: 10px;"></div>
-        <textarea id="search-input" placeholder="Edit or confirm title..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;"></textarea>
-        <button id="search-reddit" style="margin-top: 10px; width: 100%; padding: 10px; background: #ff4500; color: white; border: none; border-radius: 25px; font-weight: bold;">Search in Reddit</button>
-      </div>
-      <div id="virustotal-panel" class="panel" style="display: none;">
-        <h3 style="margin-bottom: 10px;">VirusTotal Panel</h3>
-        <p style="margin-bottom: 10px;">[Placeholder for VirusTotal functionality]</p>
-      </div>
+        <div id="reddit-panel" class="panel" style="display: block;">
+            <h3 style="margin-bottom: 10px;">Reddit Page Title Search</h3>
+            <p style="margin-bottom: 10px;">Select a title to search Reddit:</p>
+            <div id="title-options" style="margin-bottom: 10px;"></div>
+            <textarea id="search-input" placeholder="Edit or confirm title..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;"></textarea>
+            <button id="search-reddit" style="margin-top: 10px; width: 100%; padding: 10px; background: #ff4500; color: white; border: none; border-radius: 25px; font-weight: bold;">Search in Reddit</button>
+        </div>
+        <div id="virustotal-panel" class="panel" style="display: none;">
+        <h3 style="margin-bottom: 10px;">VirusTotal URL or Hash Search</h3>
+        <p style="margin-bottom: 10px;">Paste or modify a URL or hash below, or use one of the quick options.</p>
+        
+        <textarea id="vt-input" placeholder="Paste URL or hash here..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 10px;"></textarea>
+        
+        <div style="display: flex; gap: 6px; margin-bottom: 12px;">
+            <button id="vt-full-url" title="Use current page URL" style="flex: 1; padding: 8px; font-size: 16px; border-radius: 25px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            🌐 Full URL
+            </button>
+            <button id="vt-base-url" title="Use base domain only" style="flex: 1; padding: 8px; font-size: 16px; border-radius: 25px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            🏠 Domain
+            </button>
+            <button id="vt-clear-input" title="Clear input field" style="flex: 1; padding: 8px; font-size: 16px; border-radius: 25px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            ❌ Clear
+            </button>
+        </div>
+
+        <div id="vt-preview-container" style="display: none; font-size: 13px; margin-bottom: 10px; transition: opacity 0.3s;">
+            <strong>Preview:</strong>
+            <span id="vt-preview-link" style="word-break: break-all;"></span>
+            <button id="vt-copy" style="margin-left: 8px; font-size: 12px;">📋 Copy</button>
+        </div>
+
+        <button id="vt-submit" style="width: 100%; padding: 12px; font-size: 15px; font-weight: bold; background-color: #007bff; color: white; border: none; border-radius: 25px; cursor: pointer;">
+            Submit to VirusTotal
+        </button>
+        </div>
+
     </div>
   `;
 
@@ -171,4 +195,107 @@
     const redditURL = `https://www.reddit.com/search/?q=${encodeURIComponent(query)}`;
     window.open(redditURL, "_blank");
   });
+  function base64urlEncode(str) {
+  return btoa(str)
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+}
+
+function isValidHash(input) {
+  const clean = input.trim().toLowerCase();
+  return (
+    /^[a-f0-9]{32}$/.test(clean) ||  // MD5
+    /^[a-f0-9]{40}$/.test(clean) ||  // SHA-1
+    /^[a-f0-9]{64}$/.test(clean)     // SHA-256
+  );
+}
+
+const vtInput = sidebar.querySelector("#vt-input");
+const vtPreviewContainer = sidebar.querySelector("#vt-preview-container");
+const vtPreviewLink = sidebar.querySelector("#vt-preview-link");
+const vtCopyBtn = sidebar.querySelector("#vt-copy");
+const vtSubmit = sidebar.querySelector("#vt-submit");
+
+// Autofill input on open
+vtInput.value = window.location.href;
+updateVTPreview();
+
+// Preview logic
+vtInput.addEventListener("input", updateVTPreview);
+
+function updateVTPreview() {
+  const input = vtInput.value.trim();
+  if (!input) {
+    vtPreviewContainer.style.display = "none";
+    return;
+  }
+
+  let vtUrl = "";
+
+  if (isValidHash(input)) {
+    vtUrl = `https://www.virustotal.com/gui/file/${input}`;
+  } else {
+    const encoded = base64urlEncode(input);
+    vtUrl = `https://www.virustotal.com/gui/url/${encoded}/detection`;
+  }
+
+  vtPreviewLink.textContent = vtUrl;
+  vtPreviewContainer.style.opacity = "0";
+  vtPreviewContainer.style.display = "block";
+
+  setTimeout(() => {
+    vtPreviewContainer.style.opacity = "1";
+  }, 10);
+}
+
+// Copy button
+vtCopyBtn.addEventListener("click", () => {
+  navigator.clipboard.writeText(vtPreviewLink.textContent).then(() => {
+    vtCopyBtn.textContent = "✅ Copied!";
+    setTimeout(() => vtCopyBtn.textContent = "📋 Copy", 1200);
+  });
+});
+
+// Helper buttons
+sidebar.querySelector("#vt-full-url").addEventListener("click", () => {
+  vtInput.value = window.location.href;
+  updateVTPreview();
+});
+sidebar.querySelector("#vt-base-url").addEventListener("click", () => {
+  try {
+    const url = new URL(window.location.href);
+    vtInput.value = url.hostname;
+    updateVTPreview();
+  } catch {}
+});
+sidebar.querySelector("#vt-clear-input").addEventListener("click", () => {
+  vtInput.value = "";
+  updateVTPreview();
+});
+
+// Submit button
+vtSubmit.addEventListener("click", () => {
+  const input = vtInput.value.trim();
+  if (!input) return alert("Please enter a URL or hash.");
+
+  vtSubmit.disabled = true;
+  vtSubmit.textContent = "🔄 Loading...";
+
+  let vtUrl = "";
+  if (isValidHash(input)) {
+    vtUrl = `https://www.virustotal.com/gui/file/${input}`;
+  } else {
+    const encoded = base64urlEncode(input);
+    vtUrl = `https://www.virustotal.com/gui/url/${encoded}/detection`;
+  }
+
+  setTimeout(() => {
+    window.open(vtUrl, "_blank");
+    vtSubmit.disabled = false;
+    vtSubmit.textContent = "Submit to VirusTotal";
+  }, 500);
+});
+
+
 })();
