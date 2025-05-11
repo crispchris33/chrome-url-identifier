@@ -37,8 +37,8 @@
     },
     "web_accessible_resources": [
       {
-        "resources": ["Project/js/sidebar-inject.js"],
-        "matches": ["http://*/*", "https://*/*"]
+        "resources": ["Project/html/sidebar.html", "Project/css/sidebar.css", "Project/js/sidebar.js", "Project/js/sidebar-inject.js"],
+        "matches": ["<all_urls>"]
       }
     ]
 }
