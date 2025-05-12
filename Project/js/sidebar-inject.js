@@ -10,18 +10,21 @@
   const sidebar = document.createElement("div");
   sidebar.id = SIDEBAR_ID;
   sidebar.style.cssText = `
+    all: initial;
     position: fixed;
     top: 0;
     right: 0;
     width: 400px;
     background-color: #fff;
+    color: #333;
+    font-family: Arial, sans-serif;
     box-shadow: -2px 0 10px rgba(0,0,0,0.3);
     z-index: 2147483647;
     overflow-y: auto;
     border-left: 1px solid #ddd;
-    font-family: Arial, sans-serif;
     padding: 16px;
   `;
+
 
   sidebar.innerHTML = `
     <button id="close-sidebar" style="
@@ -80,34 +83,88 @@
 
     <div id="panels" style="margin-top: 20px;">
         <div id="reddit-panel" class="panel" style="display: block;">
-            <h3 style="margin-bottom: 10px;">Reddit Page Title Search</h3>
-            <p style="margin-bottom: 10px;">Select a title to search Reddit:</p>
+            <h3 style="margin-bottom: 10px; font-size: 16px; font-weight: bold; color: #333; font-family: Arial, sans-serif; line-height: 1.4;">Reddit Page Title Search</h3>
+            <p style="margin-bottom: 10px; font-size: 14px; color: #333; font-family: Arial, sans-serif; line-height: 1.4;">Select a title to search Reddit:</p>
             <div id="title-options" style="margin-bottom: 10px;"></div>
-            <textarea id="search-input" placeholder="Edit or confirm title..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;"></textarea>
+            <textarea id="search-input" placeholder="Edit or confirm title..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; font-family: Arial, sans-serif; color: #333; background: #fff; box-sizing: border-box;"></textarea>
             <button id="search-reddit" style="margin-top: 10px; width: 100%; padding: 10px; background: #ff4500; color: white; border: none; border-radius: 25px; font-weight: bold;">Search in Reddit</button>
         </div>
         <div id="virustotal-panel" class="panel" style="display: none;">
-        <h3 style="margin-bottom: 10px;">VirusTotal URL or Hash Search</h3>
-        <p style="margin-bottom: 10px;">Paste or modify a URL or hash below, or use one of the quick options.</p>
+        <h3 style="margin-bottom: 10px; font-size: 16px; font-weight: bold; color: #333; font-family: Arial, sans-serif; line-height: 1.4;">VirusTotal URL or Hash Search</h3>
+        <p style="margin: 0; margin-bottom: 10px; font-size: 14px; color: #333; font-family: Arial, sans-serif; line-height: 1.4;">Paste or modify a URL or hash below, or use one of the quick options.</p>
         
-        <textarea id="vt-input" placeholder="Paste URL or hash here..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 10px;"></textarea>
+        <textarea id="vt-input" placeholder="Paste URL or hash here..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; font-family: Arial, sans-serif; color: #333; background: #fff; box-sizing: border-box; margin-bottom: 10px;"></textarea>
         
         <div style="display: flex; gap: 6px; margin-bottom: 12px;">
-            <button id="vt-full-url" title="Use current page URL" style="flex: 1; padding: 8px; font-size: 16px; border-radius: 25px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        <button id="vt-full-url" title="Use current page URL" style="
+            all: initial;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            padding: 10px 12px;
+            cursor: pointer;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        ">
             🌐 Full URL
-            </button>
-            <button id="vt-base-url" title="Use base domain only" style="flex: 1; padding: 8px; font-size: 16px; border-radius: 25px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        </button>
+
+        <button id="vt-base-url" title="Use base domain only" style="
+            all: initial;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            padding: 10px 12px;
+            cursor: pointer;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        ">
             🏠 Domain
-            </button>
-            <button id="vt-clear-input" title="Clear input field" style="flex: 1; padding: 8px; font-size: 16px; border-radius: 25px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        </button>
+
+        <button id="vt-clear-input" title="Clear input field" style="
+            all: initial;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            padding: 10px 12px;
+            cursor: pointer;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        ">
             ❌ Clear
-            </button>
+        </button>
         </div>
 
+
         <div id="vt-preview-container" style="display: none; font-size: 13px; margin-bottom: 10px; transition: opacity 0.3s;">
-            <strong>Preview:</strong>
+            <strong style="font-weight: bold; font-family: Arial, sans-serif; font-size: 13px; color: #333;">Preview:</strong>
             <span id="vt-preview-link" style="word-break: break-all;"></span>
-            <button id="vt-copy" style="margin-left: 8px; font-size: 12px;">📋 Copy</button>
+            <button id="vt-copy" style="margin-left: 8px; font-size: 12px; font-family: Arial, sans-serif; color: #333; background-color: #f1f1f1; border: 1px solid #ccc; border-radius: 6px; padding: 4px 8px; cursor: pointer;">📋 Copy</button>
         </div>
 
         <button id="vt-submit" style="width: 100%; padding: 12px; font-size: 15px; font-weight: bold; background-color: #007bff; color: white; border: none; border-radius: 25px; cursor: pointer;">

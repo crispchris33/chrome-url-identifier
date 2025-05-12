@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "URL Detail - Link Hover Info",
-    "version": "1.0",
-    "description": "Displays the real URL of links in a floating window on hover.",
+    "name": "URL Detail - Link Hover Info and Enhanced Browsing Tools",
+    "version": "2.0",
+    "description": "Preview links, analyze destinations, and scan pages with built-in Reddit search and VirusTotal tools — all inside Chrome.",
     "permissions": [
       "activeTab",
       "scripting",
@@ -37,7 +37,7 @@
     },
     "web_accessible_resources": [
       {
-        "resources": ["Project/html/sidebar.html", "Project/css/sidebar.css", "Project/js/sidebar.js", "Project/js/sidebar-inject.js"],
+        "resources": ["Project/js/sidebar-inject.js"],
         "matches": ["<all_urls>"]
       }
     ]
