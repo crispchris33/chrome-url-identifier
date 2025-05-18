@@ -50,10 +50,10 @@ URL-Detail/
 │   │   ├── popup.css
 │   │   └── options.css
 │   ├── js/
-│   │   ├── script.js          # hover preview logic
-│   │   ├── sidebar-inject.js  # injected sidebar (Reddit + VT)
-│   │   ├── popup.js           # popup control & whitelist toggles
-│   │   └── options.js         # options page with whitelist table
+│   │   ├── script.js         ← hover preview logic
+│   │   ├── sidebar-inject.js ← injected sidebar (Reddit + VT)
+│   │   ├── popup.js          ← popup control & whitelist toggles
+│   │   └── options.js        ← options page with whitelist table
 │   ├── html/
 │   │   ├── popup.html
 │   │   └── options.html
