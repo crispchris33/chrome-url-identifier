@@ -1,3 +1,32 @@
+/**
+ * sidebar-inject.js
+ * 
+ * Injects a floating sidebar into the active webpage, allowing users to:
+ * - Search page titles on Reddit
+ * - Analyze the current URL or domain using VirusTotal
+ * 
+ * Tabs:
+ * - Reddit: Extracts common page titles (meta, H1, page title) and allows editing/searching
+ * - VirusTotal: Allows scanning full URL, base domain, or custom input (URL/hash)
+ * 
+ * Features:
+ * - Auto-preview VirusTotal link (with Base64 encoding)
+ * - Copy-to-clipboard functionality for easy sharing
+ * - Animated preview display and dynamic tab switching
+ * - Smart autofill using the current page URL
+ * 
+ * Security:
+ * - No user data is stored or transmitted externally
+ * - All DOM modifications are scoped and sanitized
+ * - Clipboard and new tab actions are only triggered by user input
+ * 
+ * Styling:
+ * - Uses inline styles with `all: initial` to avoid CSS bleed from host pages
+ * 
+ * Author: crispchris33
+ */
+
+
 (function () {
   const SIDEBAR_ID = "custom-sidebar";
 
