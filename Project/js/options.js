@@ -1,3 +1,27 @@
+/**
+ * options.js
+ * 
+ * Controls the logic for the extension's options/settings page.
+ * Allows users to:
+ * - Enable or disable the extension globally
+ * - View a table of whitelisted URLs/domains
+ * - Remove entries from the whitelist
+ * - Reload the current tab (for instant feedback on changes)
+ * 
+ * Features:
+ * - Loads and syncs toggle state with `chrome.storage.sync`
+ * - Dynamically populates whitelist entries on load and on change
+ * - Adds 'Delete' button for each whitelist row entry
+ * - Listens for changes to the whitelist and refreshes the UI in real time
+ * 
+ * Security:
+ * - All storage interactions scoped to `chrome.storage.sync`
+ * - No external data transmission or persistent DOM changes
+ * 
+ * Author: crispchris33
+ */
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const toggleButton = document.getElementById('toggle-extension');
     const refreshButton = document.getElementById('refresh-button');
