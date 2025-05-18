@@ -41,26 +41,30 @@
 - Uses `storage.sync` for settings and whitelist (no sensitive data stored)
 
 ## File Structure
+# Project tree
 
-URL-Detail/
-├── manifest.json
-├── Project/
-│   ├── css/
-│   │   ├── style.css
-│   │   ├── popup.css
-│   │   └── options.css
-│   ├── js/
-│   │   ├── script.js         ← hover preview logic
-│   │   ├── sidebar-inject.js ← injected sidebar (Reddit + VT)
-│   │   ├── popup.js          ← popup control & whitelist toggles
-│   │   └── options.js        ← options page with whitelist table
-│   ├── html/
-│   │   ├── popup.html
-│   │   └── options.html
-│   └── icons/
-│       ├── icon16x16.png
-│       ├── icon48x48.png
-│       └── icon128x128.png
+.  
+ * [manifest.json](./manifest.json)  
+ * [README.md](./README.md)  
+ * [URL Detail.jpg](./URL%20Detail.jpg)  
+ * [Project](./Project)  
+   * [css](./Project/css)  
+     * [style.css](./Project/css/style.css)  
+     * [popup.css](./Project/css/popup.css)  
+     * [options.css](./Project/css/options.css)  
+     * [bootstrap.min.css](./Project/css/bootstrap.min.css)  
+   * [js](./Project/js)  
+     * [script.js](./Project/js/script.js)  
+     * [sidebar-inject.js](./Project/js/sidebar-inject.js)  
+     * [popup.js](./Project/js/popup.js)  
+     * [options.js](./Project/js/options.js)  
+   * [html](./Project/html)  
+     * [popup.html](./Project/html/popup.html)  
+     * [options.html](./Project/html/options.html)  
+   * [icons](./Project/icons)  
+     * [icon16x16.png](./Project/icons/icon16x16.png)  
+     * [icon48x48.png](./Project/icons/icon48x48.png)  
+     * [icon128x128.png](./Project/icons/icon128x128.png)  
 
 
 ## Permissions Justification
