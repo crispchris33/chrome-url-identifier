@@ -1,3 +1,34 @@
+/**
+ * popup.js
+ * 
+ * Handles the logic behind the popup interface of the extension. Enables users to:
+ * - Toggle the main floating sidebar
+ * - Perform Reddit and VirusTotal lookups
+ * - Whitelist sites or base domains to exclude them from link previews
+ * - Open the extension's options page
+ * - Refresh the current tab
+ * 
+ * Features:
+ * - Secure sidebar injection using `chrome.scripting.executeScript`
+ * - VT link generation with Base64 URL encoding
+ * - Site/domain whitelist toggling synced with `chrome.storage.sync`
+ * - Prevents injection on system or restricted URLs (e.g., chrome://)
+ * 
+ * UI Controls:
+ * - Sidebar launch button
+ * - Reddit/VT quick access buttons
+ * - Toggle switch for enabling/disabling link preview
+ * - Two whitelist toggles (full URL and domain level)
+ * 
+ * Security:
+ * - Only executes on user action
+ * - Rejects execution on restricted Chrome URLs
+ * - Respects sync storage permissions only for extension-controlled data
+ * 
+ * Author: crispchris33
+ */
+
+
 document.addEventListener("DOMContentLoaded", function () {
     // Function to Open Sidebar
     function openSidebar() {
