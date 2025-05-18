@@ -1,3 +1,28 @@
+/**
+ * script.js
+ * 
+ * Core content script for URL Detail Chrome Extension.
+ * Displays real-time floating tooltips when hovering over links,
+ * showing the full URL, link text, and extracted domain.
+ * 
+ * Features:
+ * - Debounced link preview popup on hover
+ * - Domain parsing with TLD awareness
+ * - Whitelist support (user-controlled via options)
+ * - Syncs with Chrome storage
+ * - Observes dynamic content for future extensibility
+ * 
+ * Security:
+ * - No use of innerHTML (avoids XSS)
+ * - All text inserted safely with textContent
+ * - Whitelist updates handled via chrome.storage.onChanged
+ * 
+ * Dependencies:
+ * - Uses MutationObserver (currently idle)
+ * 
+ * Author: crispchris33
+ */
+
 let debounceTimer;
 let whitelist = [];
 
