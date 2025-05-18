@@ -41,9 +41,7 @@
 - Uses `storage.sync` for settings and whitelist (no sensitive data stored)
 
 ## File Structure
-# Project tree
 
-.  
  * [manifest.json](./manifest.json)  
  * [README.md](./README.md)  
  * [URL Detail.jpg](./URL%20Detail.jpg)  
