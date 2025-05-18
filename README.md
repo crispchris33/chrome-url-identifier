@@ -42,25 +42,7 @@
 
 ## File Structure
 
-URL-Detail/
-├── manifest.json
-├── Project/
-│   ├── css/
-│   │   ├── style.css
-│   │   ├── popup.css
-│   │   └── options.css
-│   ├── js/
-│   │   ├── script.js         ← hover preview logic
-│   │   ├── sidebar-inject.js ← injected sidebar (Reddit + VT)
-│   │   ├── popup.js          ← popup control & whitelist toggles
-│   │   └── options.js        ← options page with whitelist table
-│   ├── html/
-│   │   ├── popup.html
-│   │   └── options.html
-│   └── icons/
-│       ├── icon16x16.png
-│       ├── icon48x48.png
-│       └── icon128x128.png
+<pre><code>URL-Detail/ ├── manifest.json ├── Project/ │ ├── css/ │ │ ├── style.css │ │ ├── popup.css │ │ └── options.css │ ├── js/ │ │ ├── script.js ← hover preview logic │ │ ├── sidebar-inject.js ← injected sidebar (Reddit + VT) │ │ ├── popup.js ← popup control & whitelist toggles │ │ └── options.js ← options page with whitelist table │ ├── html/ │ │ ├── popup.html │ │ └── options.html │ └── icons/ │ ├── icon16x16.png │ ├── icon48x48.png │ └── icon128x128.png </code></pre>
 
 ## Permissions Justification
 
